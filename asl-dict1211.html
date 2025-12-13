@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ASL Vocabulary — Multi-Language Courses</title>
+<style>
+  :root{
+    --bg:#f3f4f6;
+    --card:#ffffff;
+    --ink:#111827;
+    --muted:#6b7280;
+    --border:#e5e7eb;
+    --shadow:0 10px 30px rgba(15,23,42,.12);
+    --radius:16px;
+    --brand:#90CA29;
+    --brand-soft:#e4f7c0;
+    --strip:#1f2933;
+  }
+
+  *{box-sizing:border-box}
+
+  body{
+    margin:0;
+    font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+    background:var(--bg);
+    color:var(--ink);
+  }
+
+  .wrap{
+    max-width:1100px;
+    margin:32px auto;
+    padding:0 16px 32px;
+  }
+
+  header{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:16px;
+    padding:12px 16px;
+    border-radius:18px;
+    background:linear-gradient(180deg,#85C11B,#90CA29);
+    color:#ffffff;
+    box-shadow:0 10px 25px rgba(0,0,0,.25);
+    min-height:52px;
+  }
+
+  .back{
+    appearance:none;
+    border:1px solid #111827;
+    background:#1f2933;
+    color:#f9fafb;
+    border-radius:999px;
+    width:40px;
+    height:40px;
+    padding:0;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 4px 10px rgba(0,0,0,.25);
+  }
+  .back:hover{
+    background:#111827;
+    border-color:#111827;
+  }
+  .back svg{
+    width:20px;
+    height:20px;
+  }
+
+  .title{
+    font-size:20px;
+    font-weight:700;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    line-height:1.2;
+  }
+
+  .panel{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+  }
+
+  /* COURSE (LANGUAGE) GRID */
+  .courses{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:16px;
+    padding:18px 36px 16px; /* more horizontal indent for language buttons */
+  }
+  @media (min-width:900px){
+    .courses{
+      max-width:400px;
+    }
+  }
+
+
+  .course-btn{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    padding:18px 16px;
+    border-radius:16px;
+    border:1px solid #111827;
+    background:#1f2933;
+    cursor:pointer;
+    color:#f9fafb;
+    box-shadow:0 6px 18px rgba(15,23,42,.28);
+    transition:transform .08s ease, box-shadow .1s ease,
+               border-color .1s ease, background .12s ease;
+    text-align:left;
+  }
+  .course-btn:hover{
+    border-color:var(--brand);
+    background:#111827;
+    box-shadow:0 10px 26px rgba(15,23,42,.36);
+    transform:translateY(-1px);
+  }
+  .course-title{
+    font-size:18px;
+    font-weight:700;
+  }
+
+  /* UNITS GRID */
+  .units{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:12px;
+    padding:18px 16px 16px;
+  }
+  @media (max-width:900px){
+    .units{grid-template-columns:repeat(3,1fr);}
+  }
+  @media (max-width:600px){
+    .units{grid-template-columns:repeat(2,1fr);}
+  }
+
+  .unit-btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:14px 12px;
+    border-radius:14px;
+    border:1px solid #111827;
+    background:#1f2933;
+    cursor:pointer;
+    font-weight:600;
+    color:#f9fafb;
+    box-shadow:0 4px 14px rgba(15,23,42,.25);
+    transition:transform .08s ease, box-shadow .1s ease,
+               border-color .1s ease, background .12s ease;
+  }
+  .unit-btn:hover{
+    border-color:var(--brand);
+    background:#111827;
+    box-shadow:0 8px 22px rgba(15,23,42,.35);
+    transform:translateY(-1px);
+  }
+
+  .unit-page{
+    padding:16px 16px 20px;
+  }
+
+  .unit-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin:0 0 10px;
+  }
+  .unit-head h2{
+    margin:0;
+    font-size:18px;
+    font-weight:800;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    color:#374151;
+  }
+
+  .search-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    align-items:center;
+    margin:0 0 10px;
+  }
+  
+  @media (min-width: 900px){
+    .search-row{
+      max-width:400px;
+    }
+  }
+  .search-label{
+    font-size:14px;
+    color:var(--muted);
+    min-width:52px;
+  }
+
+  .search-input-wrap{
+    flex:1 1 220px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+
+  /* UNDERLINE-ONLY SEARCH INPUT */
+  .search-input{
+    flex:1 1 auto;
+    padding:5px 0 4px 0;
+    border:none;
+    border-bottom:2px solid var(--border);
+    border-radius:0;
+    background:transparent;
+    font-size:14px;
+    color:var(--ink);
+  }
+  .search-input::placeholder{
+    color:#9ca3af;
+  }
+  .search-input:focus{
+    outline:none;
+    border-bottom-color:var(--brand);
+    background:transparent;
+  }
+
+  /* Mic button */
+  .mic-btn{
+    flex:0 0 auto;
+    appearance:none;
+    border-radius:999px;
+    border:1px solid var(--border);
+    width:34px;
+    height:34px;
+    padding:0;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    background:#f9fafb;
+  }
+  .mic-btn svg{
+    width:18px;
+    height:18px;
+    fill:#4b5563;
+  }
+  .mic-btn:hover{
+    border-color:var(--brand);
+    background:#eef6d9;
+  }
+  .mic-btn.listening{
+    border-color:#b91c1c;
+    background:#fee2e2;
+  }
+  .mic-btn.listening svg{
+    fill:#b91c1c;
+  }
+
+  /* ENTRIES GRID: 2 columns on desktop */
+  #entries{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:12px;
+  }
+  @media (max-width:800px){
+    #entries{
+      grid-template-columns:1fr;
+    }
+  }
+
+  .entry{
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:#ffffff;
+    overflow:clip;
+  }
+
+  .entry-top{
+    min-height:50px;
+  height:50px;
+    padding:0 14px;
+    border-bottom:1px solid #e5e7eb;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background:var(--strip);
+    color:#f9fafb;
+    gap:8px;
+  }
+
+  .entry-top-main{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    min-width:0;
+    white-space:nowrap;
+  }
+
+  .en{
+    font-weight:800;
+    color:#ffffff;
+  }
+  .sep{
+    opacity:.7;
+    color:#d1d5db;
+  }
+  .vi{
+    color:#e4f7c0;
+  }
+
+  .pic-btn{appearance:none;
+    border:none;
+    background:transparent;
+    cursor:pointer;
+    padding:0;
+    border-radius:999px;
+  width:32px;
+  height:32px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+  .pic-placeholder{
+    display:inline-flex;
+    width:32px;
+    height:32px;
+  }
+
+  .pic-btn:hover{
+    background:rgba(255,255,255,.12);
+  }
+  .pic-btn svg{
+    width:28px;
+    height:28px;
+    stroke:#e5e7eb;
+    stroke-width:1.6;
+    fill:none;
+  }
+
+  .media{
+    display:block;
+    padding:14px;
+    background:#f3f4f6;
+  }
+
+  .media .box{
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    background:#000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    /* Make video box look like YouTube: 16:9 */
+    aspect-ratio:16/9;
+  }
+
+  video,
+  iframe{
+    width:100%;
+    height:100%;
+    display:block;
+  }
+
+  .speed-row{
+    padding:10px 14px 12px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    align-items:center;
+    background:#ffffff;
+  }
+  .speed-label{
+    font-size:13px;
+    color:var(--muted);
+  }
+  .speed-btn{
+    appearance:none;
+    border:1px solid var(--border);
+    background:#f9fafb;
+    color:#111827;
+    border-radius:999px;
+    padding:3px 10px;
+    font-size:13px;
+    cursor:pointer;
+    transition:background .1s ease, border-color .1s ease, transform .06s ease;
+  }
+  .speed-btn.active{
+    border-color:var(--brand);
+    background:rgba(144,202,41,.15);
+    font-weight:600;
+  }
+  .speed-btn:hover{
+    border-color:var(--brand);
+    background:rgba(144,202,41,.23);
+    transform:translateY(-0.5px);
+  }
+
+  .hidden{display:none}
+
+  /* LIGHTBOX MODAL */
+  #imgModal{
+    position:fixed;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:50;
+  }
+  #imgModal.hidden{display:none;}
+  .modal-backdrop{
+    position:absolute;
+    inset:0;
+    background:rgba(15,23,42,.55);
+  }
+  .modal-dialog{
+    position:relative;
+    z-index:1;
+    max-width:90vw;
+    max-height:90vh;
+    background:#111827;
+    border-radius:16px;
+    box-shadow:0 20px 45px rgba(0,0,0,.6);
+    padding:10px;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+  }
+  .modal-dialog img{
+    max-width:100%;
+    max-height:80vh;
+    display:block;
+    object-fit:contain;
+    background:#000;
+  }
+  .modal-close{
+    appearance:none;
+    border:none;
+    background:transparent;
+    color:#e5e7eb;
+    cursor:pointer;
+    font-size:20px;
+    line-height:1;
+    padding:2px 6px;
+    align-self:flex-end;
+  }
+  .modal-close:hover{
+    color:#ffffff;
+  }
+
+  @media (max-width:700px){
+    .wrap{
+      margin:20px auto 28px;
+      padding:0 10px 24px;
+    }
+    header{
+      flex-wrap:wrap;
+      align-items:center;
+      row-gap:8px;
+    }
+    .title{
+      font-size:18px;
+    }
+  }
+
+
+  @media (max-width:640px){
+    .entry-top{
+      align-items:center;
+    }
+    .entry-top-main{
+      white-space:normal;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header id="header">
+    <button class="back hidden" id="backBtn" aria-label="Back">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path fill="none" stroke="white" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round"
+              d="M15 4l-8 8 8 8M7 12h13"/>
+      </svg>
+    </button>
+    <div class="title" id="headerTitle">ASL | Select a language</div>
+  </header>
+
+  <!-- Language selection (courses) -->
+  <section class="panel" id="coursesView" aria-label="Language Courses">
+    <div class="courses">
+      <button class="course-btn" data-course="chk">
+        <div class="course-title">Chuukese</div>
+      </button>
+      <button class="course-btn" data-course="vi">
+        <div class="course-title">Vietnamese | Tiếng Việt</div>
+      </button>
+    </div>
+  </section>
+
+  <!-- Units view (for selected language) -->
+  <section class="panel hidden" id="unitsView" aria-label="Units">
+    <div class="units" id="unitsList"></div>
+  </section>
+
+  <!-- Unit detail view -->
+  <section class="panel hidden" id="unitPage" aria-live="polite">
+    <div class="unit-page">
+      <div class="unit-head">
+        <h2 id="unitTitle">Unit</h2>
+      </div>
+
+      <div class="search-row">
+        <label for="searchInput" class="search-label">Search</label>
+        <div class="search-input-wrap">
+          <input id="searchInput" class="search-input" type="text"
+                 placeholder="Search English or target language…"/>
+          <button type="button" class="mic-btn" id="micBtn"
+                  aria-label="Speech search" aria-pressed="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 14c1.66 0 3-1.34 3-3V7a3 3 0 0 0-6 0v4c0 1.66 1.34 3 3 3zm5-3a1 1 0 0 1 2 0 7 7 0 0 1-6 6.93V20h2a1 1 0 1 1 0 2H9a1 1 0 1 1 0-2h2v-2.07A7 7 0 0 1 5 11a1 1 0 0 1 2 0 5 5 0 0 0 10 0z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div id="entries"></div>
+    </div>
+  </section>
+</div>
+
+<!-- Global image lightbox -->
+<div id="imgModal" class="hidden">
+  <div class="modal-backdrop"></div>
+  <div class="modal-dialog">
+    <button class="modal-close" id="modalCloseBtn" aria-label="Close image">×</button>
+    <img id="modalImg" src="" alt="">
+  </div>
+</div>
+
+<script>
+const PLACEHOLDER_IMG = "https://via.placeholder.com/300x200?text=Picture";
+
+/* COURSES DATA */
+const COURSES = {
+  vi: {
+    key: "vi",
+    label: "Vietnamese | Tiếng Việt",
+    headerTitle: "ASL | VIETNAMESE",
+    units: ["Family","Food","Schedule","Emotions","Chores"],
+    vocab: {
+      Family: [
+        {
+          en:"family",
+          tl:"gia đình",
+          video:"https://youtu.be/SxrxUgeTt00?si=npusJ15TUwgBI9XO",
+          image:"https://i.imgur.com/4UCHCmA.jpeg"
+        },
+        { en:"mom", tl:"mẹ/má/u/mạ", video:"", image:PLACEHOLDER_IMG },
+        { en:"dad", tl:"cha/ba/bố/thầy", video:"", image:PLACEHOLDER_IMG },
+        { en:"boy", tl:"bé trai/cậu bé/thằng nhóc/con trai", video:"", image:PLACEHOLDER_IMG },
+        { en:"girl", tl:"bé gái/cô bé/con nhỏ/con bé/con gái", video:"", image:PLACEHOLDER_IMG },
+        { en:"son", tl:"con trai", video:"", image:PLACEHOLDER_IMG },
+        { en:"daughter", tl:"con gái", video:"", image:PLACEHOLDER_IMG },
+        { en:"child", tl:"con", video:"", image:PLACEHOLDER_IMG },
+        { en:"children", tl:"những đứa con/các con", video:"", image:PLACEHOLDER_IMG },
+        { en:"brother", tl:"anh/anh trai/em trai/anh ruột/em trai ruột", video:"", image:PLACEHOLDER_IMG },
+        { en:"sister", tl:"chị/chị gái/chị ruột/em gái/em gái ruột", video:"", image:PLACEHOLDER_IMG },
+        { en:"aunt", tl:"dì/mợ/thím/bác gái", video:"", image:PLACEHOLDER_IMG },
+        { en:"uncle", tl:"cậu/chú/bác trai", video:"", image:PLACEHOLDER_IMG },
+        { en:"female cousin", tl:"chị họ/em gái họ", video:"", image:PLACEHOLDER_IMG },
+        { en:"male cousin", tl:"anh họ/em trai họ", video:"", image:PLACEHOLDER_IMG },
+        { en:"grandma", tl:"bà ngoại/bà nội", video:"", image:PLACEHOLDER_IMG },
+        { en:"grandpa", tl:"ông ngoại/ông nội", video:"", image:PLACEHOLDER_IMG },
+        { en:"who", tl:"ai/người mà", video:"", image:PLACEHOLDER_IMG },
+      ],
+      Food: [
+        { en:"meat", tl:"thịt", video:"", image:PLACEHOLDER_IMG },
+        { en:"pork", tl:"thịt heo", video:"", image:PLACEHOLDER_IMG },
+        { en:"chicken", tl:"thịt gà/con gà", video:"", image:PLACEHOLDER_IMG },
+        { en:"beef", tl:"thịt bò", video:"", image:PLACEHOLDER_IMG },
+        { en:"fish", tl:"cá", video:"", image:PLACEHOLDER_IMG },
+        { en:"duck", tl:"thịt vịt/con vịt", video:"", image:PLACEHOLDER_IMG },
+        { en:"shrimp", tl:"tôm", video:"", image:PLACEHOLDER_IMG },
+        { en:"vegetables", tl:"rau củ quả", video:"", image:PLACEHOLDER_IMG },
+        { en:"cabbage", tl:"bắp cải/cải nồi", video:"", image:PLACEHOLDER_IMG },
+        { en:"carrots", tl:"cà rốt", video:"", image:PLACEHOLDER_IMG },
+        { en:"onion", tl:"hành tây", video:"", image:PLACEHOLDER_IMG },
+        { en:"fruit", tl:"trái cây", video:"", image:PLACEHOLDER_IMG },
+        { en:"mango", tl:"trái xoài", video:"", image:PLACEHOLDER_IMG },
+        { en:"banana", tl:"trái chuối", video:"", image:PLACEHOLDER_IMG },
+        { en:"pineapple", tl:"trái thơm/trái dứa", video:"", image:PLACEHOLDER_IMG },
+        { en:"papaya", tl:"trái đu đủ", video:"", image:PLACEHOLDER_IMG },
+        { en:"coconut", tl:"trái dừa", video:"", image:PLACEHOLDER_IMG },
+        { en:"rice", tl:"cơm", video:"", image:PLACEHOLDER_IMG },
+        { en:"noodles", tl:"mì/bún/miến/phở/bánh canh/hủ tíu", video:"", image:PLACEHOLDER_IMG },
+        { en:"sweetened condensed milk", tl:"sữa đặc", video:"", image:PLACEHOLDER_IMG },
+        { en:"milk", tl:"sữa", video:"", image:PLACEHOLDER_IMG },
+        { en:"yogurt", tl:"sữa chua/da-ua", video:"", image:PLACEHOLDER_IMG },
+        { en:"butter", tl:"bơ", video:"", image:PLACEHOLDER_IMG },
+        { en:"breakfast", tl:"bữa sáng", video:"", image:PLACEHOLDER_IMG },
+        { en:"lunch", tl:"bữa trưa", video:"", image:PLACEHOLDER_IMG },
+        { en:"dinner", tl:"bữa tối", video:"", image:PLACEHOLDER_IMG },
+        { en:"what", tl:"cái gì/cái mà", video:"", image:PLACEHOLDER_IMG },
+      ],
+      Schedule: [
+        { en:"minute", tl:"phút", video:"", image:PLACEHOLDER_IMG },
+        { en:"hour", tl:"giờ", video:"", image:PLACEHOLDER_IMG },
+        { en:"day", tl:"ngày", video:"", image:PLACEHOLDER_IMG },
+        { en:"week", tl:"tuần", video:"", image:PLACEHOLDER_IMG },
+        { en:"month", tl:"tháng", video:"", image:PLACEHOLDER_IMG },
+        { en:"year", tl:"năm", video:"", image:PLACEHOLDER_IMG },
+        { en:"1:00", tl:"một giờ", video:"", image:PLACEHOLDER_IMG },
+        { en:"2:00", tl:"hai giờ", video:"", image:PLACEHOLDER_IMG },
+        { en:"3:00", tl:"ba giờ", video:"", image:PLACEHOLDER_IMG },
+        { en:"4:00", tl:"bốn giờ", video:"", image:PLACEHOLDER_IMG },
+        { en:"5:00", tl:"năm giờ", video:"", image:PLACEHOLDER_IMG },
+        { en:"6:00", tl:"sáu giờ", video:"", image:PLACEHOLDER_IMG },
+        { en:"7:00", tl:"bảy giờ", video:"", image:PLACEHOLDER_IMG },
+        { en:"8:00", tl:"tám giờ", video:"", image:PLACEHOLDER_IMG },
+        { en:"9:00", tl:"chín giờ", video:"", image:PLACEHOLDER_IMG },
+        { en:"10:00", tl:"mười giờ", video:"", image:PLACEHOLDER_IMG },
+        { en:"11:00", tl:"mười một giờ", video:"", image:PLACEHOLDER_IMG },
+        { en:"12:00", tl:"mười hai giờ", video:"", image:PLACEHOLDER_IMG },
+        { en:"noon", tl:"giữa trưa", video:"", image:PLACEHOLDER_IMG },
+        { en:"midnight", tl:"nửa đêm", video:"", image:PLACEHOLDER_IMG },
+        { en:"morning", tl:"buổi sáng", video:"", image:PLACEHOLDER_IMG },
+        { en:"afternoon", tl:"buổi trưa", video:"", image:PLACEHOLDER_IMG },
+        { en:"evening", tl:"buổi chiều", video:"", image:PLACEHOLDER_IMG },
+        { en:"am", tl:"giờ sáng", video:"", image:PLACEHOLDER_IMG },
+        { en:"pm", tl:"giờ tối/giờ chiều", video:"", image:PLACEHOLDER_IMG },
+        { en:"past", tl:"qua/rưỡi", video:"", image:PLACEHOLDER_IMG },
+        { en:"yesterday", tl:"hôm qua", video:"", image:PLACEHOLDER_IMG },
+        { en:"2 weeks ago", tl:"hai tuần trước", video:"", image:PLACEHOLDER_IMG },
+        { en:"last month", tl:"tháng trước", video:"", image:PLACEHOLDER_IMG },
+        { en:"last year", tl:"năm trước", video:"", image:PLACEHOLDER_IMG },
+        { en:"now", tl:"bây giờ/lúc này", video:"", image:PLACEHOLDER_IMG },
+        { en:"today", tl:"hôm nay", video:"", image:PLACEHOLDER_IMG },
+        { en:"this morning", tl:"sáng nay", video:"", image:PLACEHOLDER_IMG },
+        { en:"this afternoon", tl:"trưa nay", video:"", image:PLACEHOLDER_IMG },
+        { en:"today at 7:00pm", tl:"hôm nay lúc 7 giờ tối", video:"", image:PLACEHOLDER_IMG },
+        { en:"future", tl:"tương lai", video:"", image:PLACEHOLDER_IMG },
+        { en:"tomorrow", tl:"ngày mai", video:"", image:PLACEHOLDER_IMG },
+        { en:"in 2 weeks", tl:"trong 2 tuần/sau 2 tuần/2 tuần nữa", video:"", image:PLACEHOLDER_IMG },
+        { en:"next month", tl:"tháng sau", video:"", image:PLACEHOLDER_IMG },
+        { en:"in a year", tl:"trong 1 năm", video:"", image:PLACEHOLDER_IMG },
+        { en:"when", tl:"khi mà/lúc mà", video:"", image:PLACEHOLDER_IMG },
+        { en:"what-do", tl:"làm gì", video:"", image:PLACEHOLDER_IMG },
+      ],
+      Emotions: [
+        { en:"happy",      tl:"vui vẻ/hạnh phúc",             video:"", image:PLACEHOLDER_IMG },
+        { en:"sad",        tl:"buồn/không vui",               video:"", image:PLACEHOLDER_IMG },
+        { en:"angry",      tl:"giận/tức",                     video:"", image:PLACEHOLDER_IMG },
+        { en:"embarrassed",tl:"xấu hổ/quê/nhục",              video:"", image:PLACEHOLDER_IMG },
+        { en:"scared",     tl:"sợ hãi",                       video:"", image:PLACEHOLDER_IMG },
+        { en:"anxious",    tl:"lo lắng",                      video:"", image:PLACEHOLDER_IMG },
+        { en:"surprised",  tl:"bất ngờ",                      video:"", image:PLACEHOLDER_IMG },
+        { en:"lonely",     tl:"cô đơn",                       video:"", image:PLACEHOLDER_IMG },
+        { en:"brave",      tl:"dũng cảm",                     video:"", image:PLACEHOLDER_IMG },
+        { en:"proud",      tl:"tự hào",                       video:"", image:PLACEHOLDER_IMG },
+        { en:"depressed",  tl:"não nề/trầm cảm",              video:"", image:PLACEHOLDER_IMG },
+        { en:"suffering",  tl:"chịu đựng",                    video:"", image:PLACEHOLDER_IMG },
+        { en:"upset",      tl:"không vui",                    video:"", image:PLACEHOLDER_IMG },
+        { en:"jealous",    tl:"ghen tị",                      video:"", image:PLACEHOLDER_IMG },
+        { en:"silly",      tl:"ngốc nghếch/buồn cười",        video:"", image:PLACEHOLDER_IMG },
+        { en:"funny",      tl:"vui/mắc cười",                 video:"", image:PLACEHOLDER_IMG },
+        { en:"sick",       tl:"bệnh",                         video:"", image:PLACEHOLDER_IMG },
+        { en:"good",       tl:"tốt/giỏi",                     video:"", image:PLACEHOLDER_IMG },
+        { en:"bad",        tl:"tệ/không tốt/dở",              video:"", image:PLACEHOLDER_IMG },
+        { en:"why",        tl:"vì sao",                       video:"", image:PLACEHOLDER_IMG },
+      ],
+      Chores: [
+        { en:"chores",            tl:"việc nhà",                                          video:"", image:PLACEHOLDER_IMG },
+        { en:"make bed",          tl:"dọn giường",                                       video:"", image:PLACEHOLDER_IMG },
+        { en:"wash mirror",       tl:"chùi gương/lau gương/lau kính",                   video:"", image:PLACEHOLDER_IMG },
+        { en:"laundry",           tl:"giặt/giặt giũ/giặt là",                            video:"", image:PLACEHOLDER_IMG },
+        { en:"feed animals",      tl:"cho thú ăn/cho động vật ăn",                       video:"", image:PLACEHOLDER_IMG },
+        { en:"clean",             tl:"dọn/lau",                                          video:"", image:PLACEHOLDER_IMG },
+        { en:"kitchen",           tl:"nhà bếp",                                          video:"", image:PLACEHOLDER_IMG },
+        { en:"bathroom",          tl:"phòng tắm",                                        video:"", image:PLACEHOLDER_IMG },
+        { en:"bedroom",           tl:"phòng ngủ",                                        video:"", image:PLACEHOLDER_IMG },
+        { en:"living room",       tl:"phòng khách",                                      video:"", image:PLACEHOLDER_IMG },
+        { en:"take out trash",    tl:"đổ rác/vứt rác",                                   video:"", image:PLACEHOLDER_IMG },
+        { en:"dust",              tl:"bụi",                                             video:"", image:PLACEHOLDER_IMG },
+        { en:"empty dishwasher",  tl:"dỡ bát đĩa/lấy chén đĩa ra khỏi máy rửa chén",     video:"", image:PLACEHOLDER_IMG },
+        { en:"cleanout fridge",   tl:"dọn tủ lạnh",                                      video:"", image:PLACEHOLDER_IMG },
+        { en:"change bed sheets", tl:"thay ga giường",                                   video:"", image:PLACEHOLDER_IMG },
+        { en:"vacuum house",      tl:"hút bụi trong nhà",                                video:"", image:PLACEHOLDER_IMG },
+        { en:"clean cupboards",   tl:"dọn tủ chén/dọn tủ bát",                           video:"", image:PLACEHOLDER_IMG },
+        { en:"sweep",             tl:"quét",                                            video:"", image:PLACEHOLDER_IMG },
+        { en:"mop",               tl:"lau",                                             video:"", image:PLACEHOLDER_IMG },
+        { en:"wash dishes",       tl:"rửa chén/rửa bát",                                 video:"", image:PLACEHOLDER_IMG },
+      ],
+    }
+  },
+
+  chk: {
+    key: "chk",
+    label: "Chuukese",
+    headerTitle: "ASL | CHUUKESE",
+    units: ["Family"],
+    vocab: {
+      Family: [
+        { en:"boy",           tl:"att",                 video:"https://youtu.be/QHsTAkAONvg",     image:PLACEHOLDER_IMG },
+        { en:"girl",          tl:"nengin",              video:"https://youtu.be/O1HXjOHd4Uk",     image:PLACEHOLDER_IMG },
+        { en:"mom",           tl:"in",                  video:"https://youtu.be/aw0_n0zdWJw",     image:PLACEHOLDER_IMG },
+        { en:"dad",           tl:"sam",                 video:"https://youtu.be/-FXa8g3ePTg",     image:PLACEHOLDER_IMG },
+        { en:"sister",        tl:"fefinei/pwi",         video:"https://youtu.be/jJSkfkdyu8w",     image:PLACEHOLDER_IMG },
+        { en:"brother",       tl:"mwongei/pwi",         video:"https://youtu.be/SBzB1nDFoFI",     image:PLACEHOLDER_IMG },
+        { en:"daughter",      tl:"fopwun",              video:"https://youtu.be/DFdGwJH6lCE",     image:PLACEHOLDER_IMG },
+        { en:"son",           tl:"anuwon",              video:"https://youtu.be/3UlFNIJ3bco",     image:PLACEHOLDER_IMG },
+        { en:"baby",          tl:"monukon",             video:"https://youtu.be/-6E_IyjA_zU?si",  image:PLACEHOLDER_IMG },
+        { en:"grandpa",       tl:"semei chinnap",       video:"https://youtu.be/ATNQtwJRlKM",     image:PLACEHOLDER_IMG },
+        { en:"grandma",       tl:"inei chinnap",        video:"https://youtu.be/BJOUOX_x9QA",     image:PLACEHOLDER_IMG },
+        { en:"family",        tl:"famini",              video:"https://youtu.be/I8R8tqb-lj4",     image:PLACEHOLDER_IMG },
+        { en:"aunt",          tl:"tettenin in",         video:"https://youtu.be/g4RinsUlLAw",     image:PLACEHOLDER_IMG },
+        { en:"uncle",         tl:"tettenin sam",        video:"https://youtu.be/OsR5euPANIs",     image:PLACEHOLDER_IMG },
+        { en:"niece",         tl:"tettenin nei nengin", video:"https://youtu.be/wQxx-5elbjc",     image:PLACEHOLDER_IMG },
+        { en:"nephew",        tl:"tettenin nei aat",    video:"https://youtu.be/wpXV-l81auE",     image:PLACEHOLDER_IMG },
+        { en:"male cousin",   tl:"tettenin mwongei",    video:"https://youtu.be/oKgflb3CjKo",     image:PLACEHOLDER_IMG },
+        { en:"female cousin", tl:"tettenin fefinei",    video:"https://youtu.be/VlGe5Frjf9Q",     image:PLACEHOLDER_IMG },
+        { en:"child",         tl:"semirit",             video:"https://youtu.be/s3fwAGoiV44",     image:PLACEHOLDER_IMG },
+        { en:"children",      tl:"semirit",             video:"https://youtu.be/SW0kmglCs70",     image:PLACEHOLDER_IMG },
+      ]
+    }
+  }
+};
+
+const coursesView   = document.getElementById("coursesView");
+const unitsView     = document.getElementById("unitsView");
+const unitsList     = document.getElementById("unitsList");
+const unitPage      = document.getElementById("unitPage");
+const entriesEl     = document.getElementById("entries");
+const unitTitle     = document.getElementById("unitTitle");
+const backBtn       = document.getElementById("backBtn");
+const headerTitle   = document.getElementById("headerTitle");
+const searchInput   = document.getElementById("searchInput");
+const micBtn        = document.getElementById("micBtn");
+
+const imgModal      = document.getElementById("imgModal");
+const modalImg      = document.getElementById("modalImg");
+const modalCloseBtn = document.getElementById("modalCloseBtn");
+
+let currentCourseKey = null;
+let currentUnitName  = null;
+
+const UNIT_ICONS = {
+  Family:"👨‍👩‍👧",
+  Food:"🍎",
+  Schedule:"🗓️",
+  Emotions:"😊",
+  Chores:"🧹"
+};
+
+function escapeHTML(s){
+  return String(s).replace(/[&<>\"']/g, m => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"
+  }[m]));
+}
+
+function normalize(s){
+  return String(s)
+    .toLowerCase()
+    .replace(/đ/g,"d")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g,"")
+    .replace(/[^a-z0-9]/g,"");
+}
+
+function isYouTubeUrl(url){
+  if(!url) return false;
+  return url.includes("youtube.com") || url.includes("youtu.be");
+}
+function toYouTubeEmbed(url){
+  if(!url) return "";
+  let id = "";
+  if(url.includes("youtu.be/")){
+    const after = url.split("youtu.be/")[1];
+    id = after.split(/[?&]/)[0];
+  } else if(url.includes("watch?v=")){
+    const after = url.split("watch?v=")[1];
+    id = after.split(/[?&]/)[0];
+  }
+  if(!id) return url;
+  return "https://www.youtube-nocookie.com/embed/" + id + "?enablejsapi=1";
+}
+function setYouTubeSpeed(iframe, rate){
+  if(!iframe || !iframe.contentWindow) return;
+  iframe.contentWindow.postMessage(JSON.stringify({
+    event:"command",
+    func:"setPlaybackRate",
+    args:[rate]
+  }),"*");
+}
+
+/* Lightbox controls */
+function openImage(src, alt){
+  modalImg.src = src;
+  modalImg.alt = alt || "";
+  imgModal.classList.remove("hidden");
+}
+function closeImage(){
+  imgModal.classList.add("hidden");
+  modalImg.src = "";
+  modalImg.alt = "";
+}
+imgModal.addEventListener("click", e=>{
+  if(e.target === imgModal || e.target.classList.contains("modal-backdrop")){
+    closeImage();
+  }
+});
+modalCloseBtn.addEventListener("click", closeImage);
+
+/* View state */
+function showCourses(){
+  currentCourseKey = null;
+  currentUnitName  = null;
+  headerTitle.textContent = "ASL | Select a language";
+  backBtn.classList.add("hidden");
+
+  coursesView.classList.remove("hidden");
+  unitsView.classList.add("hidden");
+  unitPage.classList.add("hidden");
+  searchInput.value = "";
+}
+
+function openCourse(courseKey){
+  if(!COURSES[courseKey]) return;
+  currentCourseKey = courseKey;
+  currentUnitName  = null;
+
+  const course = COURSES[courseKey];
+  headerTitle.textContent = course.headerTitle;
+
+  coursesView.classList.add("hidden");
+  unitsView.classList.remove("hidden");
+  unitPage.classList.add("hidden");
+  backBtn.classList.remove("hidden");
+  searchInput.value = "";
+
+  populateUnits();
+}
+
+function openUnit(unitName){
+  if(!currentCourseKey) return;
+  currentUnitName = unitName;
+  const course = COURSES[currentCourseKey];
+
+  unitTitle.textContent = "Unit: " + unitName;
+  headerTitle.textContent = course.headerTitle;
+
+  unitsView.classList.add("hidden");
+  unitPage.classList.remove("hidden");
+  backBtn.classList.remove("hidden");
+  searchInput.value = "";
+
+  renderEntries(unitName);
+}
+
+/* Populate units */
+function populateUnits(){
+  const course = COURSES[currentCourseKey];
+  unitsList.innerHTML = "";
+  if(!course) return;
+  course.units.forEach(name=>{
+    const btn = document.createElement("button");
+    btn.className = "unit-btn";
+    btn.dataset.unit = name;
+    const emoji = UNIT_ICONS[name] || "📚";
+    btn.textContent = emoji + " " + name;
+    unitsList.appendChild(btn);
+  });
+}
+
+/* Render entries (cards) */
+function renderEntries(unitName){
+  const course = COURSES[currentCourseKey];
+  const list = (course && course.vocab[unitName]) || [];
+  entriesEl.innerHTML = "";
+
+  if(!list.length){
+    entriesEl.innerHTML = `<div style="padding:12px;color:#6b7280">
+      No vocabulary yet for <b>${escapeHTML(unitName)}</b> in this language.
+    </div>`;
+    return;
+  }
+
+  list.forEach(item=>{
+    const { en="", tl="", video="", image="" } = item;
+
+    const card = document.createElement("div");
+    card.className = "entry";
+
+    const top = document.createElement("div");
+    top.className = "entry-top";
+
+    const main = document.createElement("div");
+    main.className = "entry-top-main";
+    main.innerHTML =
+      `<span class="en">${escapeHTML(en)}</span>
+       <span class="sep">—</span>
+       <span class="vi">${escapeHTML(tl)}</span>`;
+    top.appendChild(main);
+
+
+    const realImage = image && image !== PLACEHOLDER_IMG;
+    if(realImage){
+      const picBtn = document.createElement("button");
+      picBtn.type = "button";
+      picBtn.className = "pic-btn";
+      picBtn.setAttribute("aria-label","Show picture");
+      picBtn.innerHTML = `
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="4" y="5" width="16" height="10"></rect>
+          <rect x="4" y="15" width="16" height="4"></rect>
+        </svg>
+      `;
+      picBtn.addEventListener("click", ()=>{
+        openImage(image, en + " — " + tl);
+      });
+      top.appendChild(picBtn);
+    } else {
+      const spacer = document.createElement("span");
+      spacer.className = "pic-placeholder";
+      spacer.setAttribute("aria-hidden","true");
+      top.appendChild(spacer);
+    }
+
+    const media = document.createElement("div");
+    media.className = "media";
+
+    const vbox = document.createElement("div");
+    vbox.className = "box";
+
+    const isYT = isYouTubeUrl(video);
+    let vid = null;
+    let iframe = null;
+
+    if(isYT && video){
+      iframe = document.createElement("iframe");
+      iframe.src = toYouTubeEmbed(video);
+      iframe.allowFullscreen = true;
+      iframe.setAttribute("allow",
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture");
+      iframe.referrerPolicy = "strict-origin-when-cross-origin";
+      vbox.appendChild(iframe);
+    } else if(video){
+      vid = document.createElement("video");
+      vid.controls = true;
+      vid.src = video;
+      vbox.appendChild(vid);
+    } else {
+      vbox.innerHTML = `<div style="color:#9ca3af;font-size:13px;">No video yet</div>`;
+    }
+
+    media.appendChild(vbox);
+
+    const controls = document.createElement("div");
+    controls.className = "speed-row";
+    const label = document.createElement("span");
+    label.className = "speed-label";
+    label.textContent = "Speed:";
+    controls.appendChild(label);
+
+    const speeds = [0.25,0.50,0.75,1.0];
+    speeds.forEach(rate=>{
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "speed-btn";
+      btn.textContent =
+        rate === 1 ? "1.00x" :
+        rate === 0.75 ? "0.75x" :
+        rate === 0.5 ? "0.50x" :
+        "0.25x";
+
+      if(rate === 1.0) btn.classList.add("active");
+
+      btn.addEventListener("click", ()=>{
+        controls.querySelectorAll(".speed-btn")
+          .forEach(b=>b.classList.remove("active"));
+        btn.classList.add("active");
+
+        if(isYT && iframe){
+          setYouTubeSpeed(iframe, rate);
+        }else if(vid){
+          vid.playbackRate = rate;
+        }
+      });
+
+      controls.appendChild(btn);
+    });
+
+    /* SEARCH METADATA */
+    const phraseNorms = [];
+    const tokenNorms  = [];
+    function addPhrase(form){
+      const raw = form.trim();
+      if(!raw) return;
+      const normPhrase = normalize(raw);
+      if(!normPhrase) return;
+      phraseNorms.push(normPhrase);
+      raw.split(/\s+/).forEach(word=>{
+        const wn = normalize(word);
+        if(wn) tokenNorms.push(wn);
+      });
+    }
+    if(en) addPhrase(en);
+    if(tl) tl.split("/").forEach(part=>addPhrase(part));
+
+    card.dataset.phrases = JSON.stringify(phraseNorms);
+    card.dataset.tokens  = JSON.stringify(tokenNorms);
+
+    card.append(top, media, controls);
+    entriesEl.appendChild(card);
+  });
+}
+
+/* BACK LOGIC */
+backBtn.addEventListener("click", ()=>{
+  if(currentUnitName){
+    currentUnitName = null;
+    unitPage.classList.add("hidden");
+    unitsView.classList.remove("hidden");
+    const course = COURSES[currentCourseKey];
+    headerTitle.textContent = course ? course.headerTitle : "ASL | Select a language";
+    searchInput.value = "";
+  }else if(currentCourseKey){
+    showCourses();
+  }
+});
+
+/* Click handlers */
+document.querySelector(".courses").addEventListener("click", e=>{
+  const btn = e.target.closest(".course-btn");
+  if(!btn) return;
+  openCourse(btn.dataset.course);
+});
+unitsList.addEventListener("click", e=>{
+  const btn = e.target.closest(".unit-btn");
+  if(!btn) return;
+  openUnit(btn.dataset.unit);
+});
+
+/* SEARCH */
+searchInput.addEventListener("input", ()=>{
+  filterEntries(searchInput.value.trim());
+});
+
+function filterEntries(q){
+  const raw = q.trim();
+  const queryNorm = normalize(raw);
+  const cards = entriesEl.querySelectorAll(".entry");
+
+  if(!queryNorm || queryNorm.length < 2){
+    cards.forEach(c => c.style.display = "");
+    return;
+  }
+
+  const hasSpace = /\s/.test(raw);
+
+  cards.forEach(c=>{
+    let phrases = [];
+    let tokens  = [];
+    try{
+      phrases = JSON.parse(c.dataset.phrases || "[]");
+      tokens  = JSON.parse(c.dataset.tokens  || "[]");
+    }catch(e){
+      phrases = [];
+      tokens  = [];
+    }
+
+    let match;
+    if(hasSpace){
+      match = phrases.includes(queryNorm);
+    }else{
+      match = tokens.some(t => t.startsWith(queryNorm));
+    }
+
+    c.style.display = match ? "" : "none";
+  });
+}
+
+/* SPEECH SEARCH */
+let recognition = null;
+let isListening = false;
+
+if('webkitSpeechRecognition' in window || 'SpeechRecognition' in window){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  recognition = new SR();
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.lang = navigator.language || 'en-US';
+
+  recognition.addEventListener('start', ()=>{
+    isListening = true;
+    micBtn.classList.add('listening');
+    micBtn.setAttribute('aria-pressed','true');
+  });
+  recognition.addEventListener('end', ()=>{
+    isListening = false;
+    micBtn.classList.remove('listening');
+    micBtn.setAttribute('aria-pressed','false');
+  });
+  recognition.addEventListener('result', (event)=>{
+    const transcript = Array.from(event.results)
+      .map(r=>r[0].transcript).join(' ');
+    searchInput.value = transcript;
+    filterEntries(transcript);
+  });
+  recognition.addEventListener('error', ()=>{
+    isListening = false;
+    micBtn.classList.remove('listening');
+    micBtn.setAttribute('aria-pressed','false');
+  });
+}
+
+micBtn.addEventListener('click', ()=>{
+  if(!recognition){
+    alert("Speech search is not supported in this browser.");
+    return;
+  }
+  if(isListening){
+    recognition.stop();
+  }else{
+    recognition.start();
+  }
+});
+
+/* start on language view */
+showCourses();
+</script>
+</body>
+</html>
